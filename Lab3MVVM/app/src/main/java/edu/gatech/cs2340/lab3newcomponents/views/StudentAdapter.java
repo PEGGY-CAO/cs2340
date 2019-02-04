@@ -47,6 +47,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
         holder.studentMajor.setText(student.getMajor());
         holder.studentName.setText(student.getName());
+        holder.studentClassStanding.setText(student.getClassStand().toString());
 
     }
 
@@ -67,6 +68,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     class StudentViewHolder extends RecyclerView.ViewHolder {
         private TextView studentName;
         private TextView studentMajor;
+        private TextView studentClassStanding;
 
 
 
@@ -74,6 +76,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             super(itemView);
             studentName = itemView.findViewById(R.id.text_student_name);
             studentMajor = itemView.findViewById(R.id.text_student_major);
+            studentClassStanding = itemView.findViewById(R.id.text_student_classStanding);
 
             itemView.setOnClickListener(new View.OnClickListener() {
 

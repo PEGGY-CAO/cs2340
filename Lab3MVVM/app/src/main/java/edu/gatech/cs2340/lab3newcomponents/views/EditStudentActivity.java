@@ -30,6 +30,7 @@ public class EditStudentActivity extends AppCompatActivity {
     private TextView idField;
     private EditText nameField;
     private Spinner majorSpinner;
+    private Spinner classStandingSpinner;
 
     /* ***********************
        Data for student being edited.
@@ -60,6 +61,7 @@ public class EditStudentActivity extends AppCompatActivity {
         nameField = findViewById(R.id.student_name_input);
         majorSpinner = findViewById(R.id.major_spinner);
         idField = findViewById(R.id.student_id_field);
+        classStandingSpinner = findViewById(R.id.classStanding_spinner);
         Button button = findViewById(R.id.add_button);
 
         /*
@@ -69,6 +71,13 @@ public class EditStudentActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         majorSpinner.setAdapter(adapter);
 
+
+        /**
+         * set up the adapter to display the class standings in the spinner
+         * */
+        ArrayAdapter<Student.ClassStanding> classStandAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Student.ClassStanding.values());
+        classStandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        classStandingSpinner.setAdapter(classStandAdapter);
         /*
            If a student has been passed in, this was an edit, if not, this is a new add
          */
@@ -76,6 +85,7 @@ public class EditStudentActivity extends AppCompatActivity {
             //Editing an existing student - set default data
             student = (Student) getIntent().getSerializableExtra(CourseDetailActivity.STUDENT_DATA);
             majorSpinner.setSelection(Student.findPosition(student.getMajor()));
+            classStandingSpinner.setSelection(student.getClassStand().ordinal());
             editing = true;
             button.setText("Update");
             setTitle("Editing Existing Student");
@@ -103,6 +113,7 @@ public class EditStudentActivity extends AppCompatActivity {
 
         student.setName(nameField.getText().toString());
         student.setMajor((String) majorSpinner.getSelectedItem());
+        student.setClassStand((Student.ClassStanding) classStandingSpinner.getSelectedItem());
 
         Log.d("Edit", "Got new student data: " + student);
 

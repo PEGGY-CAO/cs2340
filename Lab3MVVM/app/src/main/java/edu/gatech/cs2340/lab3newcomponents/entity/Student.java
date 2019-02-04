@@ -14,8 +14,19 @@ public class Student implements Serializable {
      */
     public static List<String> legalMajors = Arrays.asList("CS", "CM", "ISYE", "MATH", "EE", "CMPE", "NA");
 
-    enum ClassStanding {
-        FR, SO, JR, SR;
+    public enum ClassStanding {
+        FRESHMAN("FR"), SOPHOMORE("SO"), JUNIOR("JR"), SENIOR("SR");
+        private String classStandingName;
+
+        private ClassStanding(String name) {
+            classStandingName = name;
+        }
+
+        @Override
+        public String toString() {
+            return classStandingName;
+        }
+
     }
     /** an attribute used to hold ClassStanding enum*/
     private ClassStanding classStand;
@@ -53,8 +64,13 @@ public class Student implements Serializable {
      * @param maj    major of the student
      */
     public Student(String nam, String maj) {
+        this(nam, maj, ClassStanding.FRESHMAN);
+    }
+
+    public Student(String nam, String maj,ClassStanding clas) {
         name = nam;
         major = maj;
+        classStand = clas;
     }
 
     //Getters are required for accessing the fields from the database
@@ -89,7 +105,7 @@ public class Student implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Student: %s, major: %s, id: %d", name, major, id);
+        return String.format("Student: %s, major: %s, id: %d, class standing: %s", name, major, id, classStand);
     }
 
 }

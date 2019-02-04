@@ -124,6 +124,7 @@ class Repository {
             if (student.getId() == s.getId()) {
                 student.setMajor(s.getMajor());
                 student.setName(s.getName());
+                student.setClassStand(s.getClassStand());
                 return;
             }
         }

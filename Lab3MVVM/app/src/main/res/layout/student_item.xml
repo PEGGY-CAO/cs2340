@@ -19,11 +19,22 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/text_student_major"
+        android:id="@+id/text_student_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:paddingEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/text_student_classStanding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/text_student_major"
             android:maxLines="1"
-            android:paddingEnd="8dp"/>
+            android:paddingEnd="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+
+
 
     </RelativeLayout>
 
