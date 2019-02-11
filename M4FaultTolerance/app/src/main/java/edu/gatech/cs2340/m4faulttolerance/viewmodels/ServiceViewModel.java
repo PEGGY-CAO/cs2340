@@ -47,7 +47,7 @@ public class ServiceViewModel extends AndroidViewModel {
         SimulatedService normalService = new NormalService(request);
         SimulatedService badService = new BadService(request);
 
-        CircuitBreakerPolicy<String> pol = new CircuitBreakerPolicyBuilder<>()
+        CircuitBreakerPolicy<String> pol = new CircuitBreakerPolicyBuilder<String>()
                 .rateThreshold(100)
                 .sizeRingBufferHalfOpen(2)
                 .sizeRingBufferClosed(4)
@@ -91,7 +91,7 @@ public class ServiceViewModel extends AndroidViewModel {
     public String makeBadRequest(String request) {
         SimulatedService service = new BadService(request);
         SimulatedService normalService = new NormalService(request);
-        FallbackPolicy<String> pol = new FallbackPolicyBuilder<>(normalService::executeTheService)
+        FallbackPolicy<String> pol = new FallbackPolicyBuilder<String>(normalService::executeTheService)
                 .build();
 
         try {
@@ -108,17 +108,18 @@ public class ServiceViewModel extends AndroidViewModel {
     public String makeSlowRequest(String request) {
         SimulatedService service = new SlowService(request);
 
-        TimeoutPolicy pol = new TimeoutPolicyBuilder()
+        TimeoutPolicy<String> pol = new TimeoutPolicyBuilder<>()
                 .duration(1000)
                 .cancelFuture(false)
                 .build();
 
 
         try {
-            pol.exec(service::executeTheService);
+            if (pol.exec(service::executeTheService) == null)
+                return "Timeout Happened";
 
             //return result;
-            return "Timeout Happened";
+            //return "Timeout Happened";
         } catch (Exception e) {
 
             e.printStackTrace();
@@ -129,7 +130,7 @@ public class ServiceViewModel extends AndroidViewModel {
 
     public String makeRetryRequest(String request) {
         SimulatedService service = new RetryService(request);
-        RetryPolicy pol = new RetryPolicyBuilder()
+        RetryPolicy<String> pol = new RetryPolicyBuilder<>()
                 .attempts(4)
                 .waitDuration(500)
                 .build();
